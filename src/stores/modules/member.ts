@@ -27,6 +27,19 @@ export const useMemberStore = defineStore(
   },
   // TODO: 持久化
   {
-    persist: true,
+    // 这是网页端的持久化配置
+    // persist: true,
+    // 微信小程序端的持久化配置需要这样写
+    persist: {
+      // 兼容多端的API
+      storage: {
+        setItem(key, value) {
+          uni.setStorageSync(key, value)
+        },
+        getItem(key) {
+          return uni.getStorageSync(key)
+        },
+      },
+    },
   },
 )
